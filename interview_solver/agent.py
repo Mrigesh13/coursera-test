@@ -113,7 +113,7 @@ def run_python(code: str, timeout_s: int = 30) -> str:
     return execute_python(code, timeout_s)
 
 
-def solve(question: str, language: str = "Python", verbose: bool = False) -> str:
+def solve(question: str, language: str = "Java", verbose: bool = False) -> str:
     """Run the agent on one question and return its final Markdown answer."""
     client = anthropic.Anthropic()
     runner = client.beta.messages.tool_runner(
@@ -155,8 +155,8 @@ def main() -> None:
     )
     parser.add_argument("question", nargs="?", help="The problem text (omit to read from --file or stdin).")
     parser.add_argument("-f", "--file", help="Read the problem from a text file.")
-    parser.add_argument("-l", "--language", default="Python",
-                        help="Language for the final solution, e.g. Java, C++, Go (default: Python).")
+    parser.add_argument("-l", "--language", default="Java",
+                        help="Language for the final solution, e.g. Python, C++, Go (default: Java).")
     parser.add_argument("-v", "--verbose", action="store_true", help="Show the model's reasoning summaries.")
     args = parser.parse_args()
 

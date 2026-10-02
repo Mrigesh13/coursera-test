@@ -10,9 +10,11 @@ algorithms / data-structures problem (LeetCode, HackerRank, Codeforces, or a typ
 engineering interview question). Deliver the solution with the best achievable time complexity,
 and among those the best space complexity, and prove it correct by running code.
 
-Write the solution in the language the user asks for; default to Python. Do all testing in
-Python 3 using only the standard library, then translate faithfully if another language was
-requested.
+Always write the final solution in **Java**, even if the problem statement shows code in
+another language. Use another language only if the user explicitly asks for one in their
+request. Write it LeetCode-style: a `class Solution` with the method signature from the problem
+(or a natural one if none is given), using only `java.util` and other standard-library classes.
+Use `long` wherever a sum, product, or intermediate value can overflow `int`.
 
 ## Workflow
 
@@ -27,19 +29,27 @@ requested.
    argument, bit tricks, or math. Use the constraints to infer the target complexity
    (n <= 1e5 means O(n log n) or better). Then look for space savings: in-place updates,
    rolling DP rows, pointers instead of auxiliary structures.
-4. **Verify correctness.** Write one script containing both solutions and stress-test them
-   against each other on a few hundred small random inputs plus the hand-picked edge cases.
-   If they disagree, print the failing input, fix the bug, and re-run until they agree.
+4. **Verify correctness.** Write one Java program containing both solutions and stress-test
+   them against each other on a few hundred small random inputs (use a fixed `Random` seed so
+   failures reproduce) plus the hand-picked edge cases. If they disagree, print the failing
+   input, fix the bug, and re-run until they agree.
 5. **Verify complexity.** Benchmark the optimized solution at growing input sizes
-   (e.g. n = 1e3, 1e4, 1e5) and check the timing growth matches the claimed complexity.
+   (e.g. n = 1e3, 1e4, 1e5) and check the timing growth matches the claimed complexity. Warm up
+   the JIT first (run the solution a few times before timing), time with `System.nanoTime()`,
+   and report the best of several runs.
 
 ### Running code
 
-- Put scratch scripts in a temporary directory (create one with `mktemp -d`), never in the
+- Put scratch files in a temporary directory (create one with `mktemp -d`), never in the
   user's repository, unless the user asked you to save the solution to a file.
-- Run them with a time limit, e.g. `timeout 60 python3 "$DIR/stress.py"`, and keep each run
+- Run the program as a single source file with no separate compile step:
+  `timeout 60 java "$DIR/Stress.java"` (JDK 11+). The first class in the file must be the
+  public class holding `main`; put `class Solution` after it in the same file. Keep each run
   under about 20 seconds.
 - Print summaries (counts of passed cases, timings), not every test case.
+- If `java -version` shows no JDK is installed, do the testing in Python 3 instead, translate
+  the verified solution faithfully into Java, and say in the Verification section that the
+  Java code itself was not compiled or run.
 
 ## Final answer
 
@@ -52,7 +62,7 @@ Approach in a sentence or two, with **Time:** and **Space:**.
 ## Optimal approach
 The key insight, why it is correct, and a short walkthrough on a small example.
 ## Solution
-The final, clean, commented code — the code you verified (or its faithful translation).
+The final, clean, commented Java code: exactly the `class Solution` you stress-tested.
 ## Complexity
 **Time:** O(...) and **Space:** O(...), each with a one-line justification. Say whether this is
 provably optimal (e.g. every element must be read) or the best known approach.
