@@ -23,8 +23,10 @@ Claude Code and ask:
 > Use the interview-solver agent to solve: *paste the problem here*
 
 Claude Code runs the brute-force comparison and timing steps with its own tools, so it needs no
-API key and costs nothing beyond your Claude Code plan. Add "in Java" (or another language) to
-get the final solution in that language. Subagents load when a session starts, so after pulling
+API key and costs nothing beyond your Claude Code plan. The final solution is always in Java;
+the agent compiles and stress-tests the Java code itself (it falls back to testing in Python if
+no JDK is installed). To get another language for one problem, say so in the request, e.g.
+"solve this in C++". Subagents load when a session starts, so after pulling
 this file, start a new session (or run `/agents` to check that `interview-solver` is listed).
 
 ## Running it as a standalone script (Claude API)
@@ -42,8 +44,8 @@ export ANTHROPIC_API_KEY=sk-ant-...   # or: ant auth login
 # Inline question
 python agent.py "Given an integer array nums, return the length of the longest strictly increasing subsequence. 1 <= n <= 2500"
 
-# From a file, with the final solution in Java
-python agent.py -f problem.txt --language Java
+# From a file, with the final solution in Python instead of the default Java
+python agent.py -f problem.txt --language Python
 
 # Paste from stdin, and show the model's reasoning summaries
 python agent.py -v
