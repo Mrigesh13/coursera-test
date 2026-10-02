@@ -14,14 +14,29 @@ code to check it:
 6. Returns a structured write-up: summary, brute force, optimal approach, solution code,
    complexity, verification, and interview tips.
 
-## Setup
+## Running it inside Claude Code (no API key)
+
+The same agent is also a Claude Code subagent, defined in
+[`.claude/agents/interview-solver.md`](../.claude/agents/interview-solver.md). Open this repo in
+Claude Code and ask:
+
+> Use the interview-solver agent to solve: *paste the problem here*
+
+Claude Code runs the brute-force comparison and timing steps with its own tools, so it needs no
+API key and costs nothing beyond your Claude Code plan. Add "in Java" (or another language) to
+get the final solution in that language. Subagents load when a session starts, so after pulling
+this file, start a new session (or run `/agents` to check that `interview-solver` is listed).
+
+## Running it as a standalone script (Claude API)
+
+### Setup
 
 ```bash
 pip install -r requirements.txt
 export ANTHROPIC_API_KEY=sk-ant-...   # or: ant auth login
 ```
 
-## Usage
+### Usage
 
 ```bash
 # Inline question
@@ -37,7 +52,7 @@ python agent.py -v
 Progress (each code run) goes to stderr and the final Markdown answer goes to stdout, so
 `python agent.py -f q.txt > answer.md` saves a clean answer.
 
-## How it works
+### How it works
 
 - Model: `claude-opus-5-5` with adaptive thinking at `high` effort.
 - The SDK's tool runner drives the agent loop with a single tool, `run_python`. It runs the
